@@ -23,7 +23,7 @@ define(function (require) {
                 var val1 = results[0].value;
                 var val2 = results[1].value;
 
-                if (val2 == 0) return null;
+                if (val1 == 0) return null;
 
 
                 var value = val2 / val1;
@@ -43,6 +43,8 @@ define(function (require) {
                         svgResult.append("svg:image").attr("xlink:href", "/bundles/src/ui/public/images/kbn_percent_nice_vis/" + results[0].image + "/" + results[0].image + _strImage + ".png").attr("x", "100px").attr("y", "5px").attr("width", "30px").attr("height", "100px");
                     }
                 }
+
+                return 1;
             }
 
         };
