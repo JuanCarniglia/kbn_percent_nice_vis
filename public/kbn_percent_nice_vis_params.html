@@ -1,0 +1,38 @@
+<div class="form-group">
+    <label>Show Pictures</label>
+    <input type="checkbox" ng-model="vis.params.showPictures" ng-checked="true" class="ng-pristine ng-valid ng-touched">
+</div>
+<div class="form-group">
+    <label>json Labels </label>
+    <label>Example : <br/>
+<pre style="height:100px;width:320px">
+[
+  { "text" : "CUENTA",
+	"numeralFormat" : "%00,0",
+  "image" : "wineBottle"
+  }
+       ]
+  }
+]
+</pre>
+<small class="pull-middle">
+  Check out numeral format options at <a ng-href="http://numeraljs.com/" target="_blank">NumeralJS documentation<i class="fa fa-link"></i></a>
+  <br/>
+  Remember to surround each field name with double quotes.
+</small>
+<small>
+  Available Images: <br />
+  wineBottle <img src="/bundles/src/ui/public/images/kbn_percent_nice_vis/wineBottle/wineBottle_100.png" /><br />
+  fuelContainer <img src="/bundles/src/ui/public/images/kbn_percent_nice_vis/fuelContainer/fuelContainer_100.png" /><br />
+</small>
+
+</label>
+    <textarea rows="10" ng-model="vis.params.jsonLabels" class="form-control">[
+      { "text" : "CUENTA",
+    	"numeralFormat" : "%00,0",
+      "image" : "wineBottle"
+      }
+           ]
+      }
+    ]</textarea>
+</div>
