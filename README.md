@@ -38,6 +38,20 @@ cp -R build/kbn_percent_nice_vis/ KIBANA_HOME/installedPlugins
 ```
 [Kibana Home Folder]/optimize/bundles/src/ui/public/images/kbn_percent_nice_vis
 ```
+** Note that in NTFS file systems, file paths that exceed 260 characters will fail with cp, you have to use ROBOCOPY:
+
+```
+robocopy /S build/kbn_percent_nice_vis KIBANA_FOLDER_PATH/installedPlugins/kbn_percent_nice_vis
+```
+
+** Also note that if npm run build fails, with a rsync.js error, it is likelly that you don't have RSYNC.EXE installed
+in your system, and also that you don't have it on your PATH environment variable.
+
+Install it from https://www.itefix.net/cwrsync and run:
+
+```
+set PATH=%PATH%;{rsync installation directory}\bin
+```
 
 So that you end up with:
 
