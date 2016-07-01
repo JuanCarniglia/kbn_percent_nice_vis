@@ -19,7 +19,12 @@ define(function (require) {
       template: require('plugins/kbn_percent_nice_vis/kbn_percent_nice_vis.html'),
       params: {
         defaults: {
-          showPictures: true
+          showPictures: true,
+          fontSizeLabel: 14,
+          fontSizeValue: 14,
+          jsonLabels: '[{ "text" : "CUENTA","numeralFormat" : "%00,0","ranges" ' +
+                      ':[{ "min" : 0,"max": 5000,"valueColor" : "blue"},' +
+                      '{ "min" : 5000,"max": 10000,"valueColor" : "red"}],"image" : "fuelContainer"}]'
         },
         editor: require('plugins/kbn_percent_nice_vis/kbn_percent_nice_vis_params.html')
       },

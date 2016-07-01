@@ -13,7 +13,7 @@ import fs from 'fs';
 
 import pkg from './package.json';
 
-const packageName = pkg.name  + '-' + pkg.version;
+const packageName = pkg.name + '-' + pkg.version;
 
 // relative location of Kibana install
 const pathToKibana = '../kibana';
@@ -49,15 +49,15 @@ function syncPluginTo(dest, done) {
     const rsync = new Rsync();
 
     rsync.source(source)
-    .destination(dest)
-    .flags('uav')
-    .recursive(true)
-    .set('delete')
-    .include(include)
-    .exclude(exclude)
-    .output(function (data) {
-      process.stdout.write(data.toString('utf8'));
-    });
+      .destination(dest)
+      .flags('uav')
+      .recursive(true)
+      .set('delete')
+      .include(include)
+      .exclude(exclude)
+      .output(function (data) {
+        process.stdout.write(data.toString('utf8'));
+      });
 
     rsync.execute(function (err) {
       if (err) {
