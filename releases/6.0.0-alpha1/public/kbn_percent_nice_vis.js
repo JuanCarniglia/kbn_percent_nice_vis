@@ -46,7 +46,7 @@ define(function (require) {
           group: 'buckets',
           name: 'segment',
           title: 'Divided By',
-          aggFilter: 'filters',
+          aggFilter: '!geohash_grid',
           min: 1,
           max: 1
         }
