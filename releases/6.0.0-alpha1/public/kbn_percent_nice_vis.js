@@ -1,15 +1,19 @@
-define(function (require) {
-  require('ui/agg_table');
-  require('ui/agg_table/agg_table_group');
 
-  require('plugins/kbn_percent_nice_vis/kbn_percent_nice_vis.less');
-  require('plugins/kbn_percent_nice_vis/kbn_percent_nice_vis_controller');
+  import 'ui/agg_table';
+  import 'ui/agg_table/agg_table_group';
+
+  import 'plugins/kbn_percent_nice_vis/kbn_percent_nice_vis.less';
+  import 'plugins/kbn_percent_nice_vis/kbn_percent_nice_vis_controller';
+
+  import TemplateVisTypeTemplateVisTypeProvider from 'ui/template_vis_type/template_vis_type';
+  import VisSchemasProvider from 'ui/vis/schemas';
+  import kbnPercentNiceVisTemplate from 'plugins/kbn_percent_nice_vis/kbn_percent_nice_vis.html';
 
   require('ui/registry/vis_types').register(KbnPercentNiceVisProvider);
 
   function KbnPercentNiceVisProvider(Private) {
-    var TemplateVisType = Private(require('ui/template_vis_type/TemplateVisType'));
-    var Schemas = Private(require('ui/Vis/Schemas'));
+    var TemplateVisType = Private(TemplateVisTypeTemplateVisTypeProvider);
+    var Schemas = Private(VisSchemasProvider);
 
     return new TemplateVisType({
       name: 'kbn_percent_nice',
@@ -46,7 +50,7 @@ define(function (require) {
           group: 'buckets',
           name: 'segment',
           title: 'Divided By',
-          aggFilter: '!geohash_grid',
+          aggFilter: 'filters',
           min: 1,
           max: 1
         }
@@ -54,6 +58,3 @@ define(function (require) {
       requiresSearch: true
     });
   }
-
-  return KbnPercentNiceVisProvider;
-});

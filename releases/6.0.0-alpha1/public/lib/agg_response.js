@@ -1,87 +1,90 @@
-define(function (require) {
-  return function percentNiceProvider(Private, Notifier) {
-    var _ = require('lodash');
-    var arrayToLinkedList = require('ui/agg_response/hierarchical/_array_to_linked_list');
+import _ from 'lodash';
+import arrayToLinkedList from 'ui/agg_response/hierarchical/_array_to_linked_list';
 
-    var notify = new Notifier({
-      location: 'Percentage Nice Response Converter'
-    });
+module.exports = function percentNiceProvider(Private, Notifier) {
 
-    var nodes = [];
+  let notify = new Notifier({
+    location: 'Percentage Nice Response Converter'
+  });
 
-    return function (vis, resp) {
+  let nodes = [];
 
-            // some validations
-      if (!vis.aggs.bySchemaGroup.metrics) return null;
+  return function (vis, resp) {
 
-      if (!vis.aggs.bySchemaGroup.buckets) return null;
+    // some validations
+    if (!vis.aggs.bySchemaGroup.metrics) return null;
 
-      nodes = [];
+    if (!vis.aggs.bySchemaGroup.buckets) return null;
 
-      var pos = 0;
+    let bucketId = vis.aggs.bySchemaGroup.buckets[0].id;
 
-      var labels = null;
+    nodes = [];
 
-      try {
-        labels = JSON.parse(vis.params.jsonLabels);
-      } catch (e) {
-        labels = '';
+    let pos = 0;
+
+    let labels = null;
+
+    try {
+      labels = JSON.parse(vis.params.jsonLabels);
+    } catch (e) {
+      labels = '';
+    }
+
+    _.each(vis.aggs, function (d, i) {
+
+      let type = d.__type.title;
+
+      let value = 0;
+
+      if (!d.__type.hasNoDsl) {
+        if (d._opts.params.filters !== undefined) {
+          if (d._opts.params.filters[0] !== undefined) {
+            value = resp.aggregations[bucketId].buckets[d._opts.params.filters[0].input.query.query_string.query].doc_count;
+          }
+        }
+      } else {
+        value = resp.hits.total;
       }
 
-      _.each(vis.aggs, function (d, i) {
+      let image = 'waterTank'; // default
 
-        var type = d.__type.title;
+      if (labels.length > pos) {
 
-        var value = 0;
+        let valueColor = 'black'; // default
 
-        if (!d.__type.hasNoDsl) {
-          value = resp.aggregations[d.id].buckets[d._opts.params.filters[0].input.query.query_string.query].doc_count;
-        } else {
-          value = resp.hits.total;
+        if (labels[pos].ranges) {
+          _.each(labels[pos].ranges, function (range, p) {
+            if (value >= range.min && value < range.max) {
+              // Found!
+              valueColor = range.valueColor ? range.valueColor : valueColor;
+              return;
+            }
+          });
         }
 
-        var image = 'waterTank'; // default
+        image = labels[pos].image;
 
-        if (labels.length > pos) {
+        nodes.push({
+          type: type,
+          value: value,
+          label: labels[pos].text,
+          formatNumber: labels[pos].numeralFormat ? labels[pos].numeralFormat : null,
+          valueColor: valueColor,
+          image: image
+        });
 
-          var valueColor = 'black'; // default
+      } else {
+        nodes.push({
+          type: type,
+          value: value,
+          label: type,
+          image: image
+        });
+      }
 
-          if (labels[pos].ranges) {
-            _.each(labels[pos].ranges, function (range, p) {
-              if (value >= range.min && value < range.max) {
-                // Found!
-                valueColor = range.valueColor ? range.valueColor : valueColor;
-                return;
-              }
-            });
-          }
+      pos++;
+    });
 
-          image =  labels[pos].image;
-
-          nodes.push(
-            {
-              type: type,
-              value: value,
-              label: labels[pos].text,
-              formatNumber: labels[pos].numeralFormat ? labels[pos].numeralFormat : null,
-              valueColor: valueColor,
-              image: image
-            });
-
-        } else {
-          nodes.push(
-            {
-              type: type,
-              value: value,
-              label: type,
-              image: image
-            });
-        }
-
-        pos++;
-      });
-
-      return nodes;
-    };
+    return nodes;
   };
-});
+};
