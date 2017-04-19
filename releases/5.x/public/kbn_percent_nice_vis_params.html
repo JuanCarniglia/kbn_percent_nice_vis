@@ -1,0 +1,36 @@
+<div class="form-group">
+  <label>Label Font Size - {{ vis.params.fontSizeLabel }}pt</label>
+  <input type="range" ng-model="vis.params.fontSizeLabel" class="form-control" min="12" max="60" />
+</div>
+<div class="form-group">
+  <label>Value Font Size - {{ vis.params.fontSizeValue }}pt</label>
+  <input type="range" ng-model="vis.params.fontSizeValue" class="form-control" min="12" max="60" />
+</div>
+<div class="form-group">
+  <label>Show Pictures</label>
+  <input type="checkbox" ng-model="vis.params.showPictures" ng-checked="true" class="ng-pristine ng-valid ng-touched">
+</div>
+<div class="form-group">
+  <label>json Labels </label>
+  <br/>
+  <small class="pull-middle">
+    Check out json options at <a ng-href="http://github.com/JuanCarniglia/kbn_percent_nice_vis" target="_blank">Vis Home Page<i class="fa fa-link"></i></a><br/>
+  </small>
+    <small class="pull-middle">
+  Check out numeral format options at <a ng-href="http://numeraljs.com/" target="_blank">NumeralJS documentation<i class="fa fa-link"></i></a>
+  <br/>
+  Remember to surround each field name with double quotes.
+</small>
+  </label>
+  <textarea rows="10" ng-model="vis.params.jsonLabels" class="form-control">
+    [{ "text" : "CUENTA","numeralFormat" : "%00,0","ranges" :
+         [
+          { "min" : 0,
+  		"max": 5000,
+  		"valueColor" : "blue"},
+          { "min" : 5000,
+  		"max": 10000,
+  		"valueColor" : "red"}
+         ],"image" : "fuelContainer"}]
+  </textarea>
+</div>
