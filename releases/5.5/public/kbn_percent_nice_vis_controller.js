@@ -1,4 +1,4 @@
-  import uiModules from 'ui/modules';
+  import { uiModules } from 'ui/modules';
   const module = uiModules.get('kibana/kbn_percent_nice_vis', ['kibana']);
 
   import d3 from 'd3';
@@ -13,9 +13,6 @@
     let svgRoot = $element[0];
 
     let _buildVis = function (results) {
-
-
-      // Ugly Hack starts here
 
       // Get the PROXY part of the path...
       let startsAt = svgRoot.baseURI.indexOf('/', svgRoot.baseURI.indexOf(':',6)) + 1;
